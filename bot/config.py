@@ -1,9 +1,9 @@
 """Bot configuration file."""
 
 from functools import lru_cache
+from zoneinfo import ZoneInfo
 
 from pydantic import BaseSettings
-from pytz import timezone
 
 class Settings(BaseSettings):
     """Bot configuration class."""
@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     db_name: str = ""
     questions_collection: str = ""
 
-    timezone = timezone("Asia/Kolkata")
+    timezone = ZoneInfo("Asia/Kolkata")
 
     class Config:
         """BaseSettings config"""

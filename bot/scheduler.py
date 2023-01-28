@@ -9,8 +9,7 @@ from apscheduler.triggers.date import DateTrigger
 
 from pymongo import MongoClient
 
-from config import get_config
-
+from bot.config import get_config
 
 config = get_config()
 
@@ -18,7 +17,16 @@ JOBSTORE = {
     'default': MongoDBJobStore(client=MongoClient(config.mongo_db)),
 }
 
-scheduler = AsyncIOScheduler(jobstores=JOBSTORE, timezone=config.timezone)
+JOB_DEFAULTS = {
+    'misfire_grace_time': None,
+    'coalesce': True,
+}
+
+scheduler = AsyncIOScheduler(
+    jobstores=JOBSTORE,
+    job_defaults=JOB_DEFAULTS,
+    timezone=config.timezone,
+)
 
 
 def add_job(
